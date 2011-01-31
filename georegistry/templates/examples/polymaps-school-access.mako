@@ -7,6 +7,14 @@ ${h.javascript_link('/files/polymaps.min.js')}
 ${h.stylesheet_link('/files/colorbrewer.css')}
 </%def>
 
+<%def name='navigation()'>
+<ul>
+    <li>Here is a heatmap of households that are farther than two kilometers from a school in Ruhiira, Uganda.</li>
+    <li><a class=linkOFF href='/examples/polymaps-household-density'>Click here to see a heatmap of household density.</a></li>
+    <li>Click on schools in the map or table to see their details.</li>
+</ul>
+</%def>
+
 <%def name='css()'>
     .compass .back {fill: #eee; fill-opacity: .8}
     .compass .fore {stroke: #999; stroke-width: 1.5px}

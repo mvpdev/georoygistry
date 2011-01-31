@@ -112,13 +112,8 @@ personKey = person.key if person else ''
     <a class=linkOFF href="${h.url('person_update')}">${session['nickname']}</a> &nbsp;
     <a class=linkOFF href="${h.url('person_logout', url=request.path)}">Logout</a>
 % endif
-    <ul>
-        <li>Select tags</li>
-        <li>Click feature in map or table</li>
-        <li>Click on feature detail box</li>
-        <li>Drag mouse on map</li>
-        <li>Scroll mouse wheel on map</li>
-    </ul>
+    <br>
+    ${self.navigation()}
 </div> 
 
 <div id=toolbar></div> 
@@ -129,6 +124,15 @@ ${next.body()}
 
 </body> 
 </html>
+<%def name='navigation()'>
+    <ul>
+        <li>Select tags</li>
+        <li>Click feature in map or table</li>
+        <li>Click on feature detail box</li>
+        <li>Drag mouse on map</li>
+        <li>Scroll mouse wheel on map</li>
+    </ul>
+</%def>
 <%def name='title()'></%def>
 <%def name='head()'></%def>
 <%def name='css()'></%def>

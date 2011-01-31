@@ -7,6 +7,14 @@ ${h.javascript_link('/files/polymaps.min.js')}
 ${h.stylesheet_link('/files/colorbrewer.css')}
 </%def>
 
+<%def name='navigation()'>
+<ul>
+    <li>Here is a heatmap of household density in Ruhiira, Uganda.</li>
+    <li><a class=linkOFF href='/examples/polymaps-school-access'>Click here to see a heatmap of households that are farther than two kilometers from a school.</a></li>
+    <li>Select Uganda Administrative Level 4 to see local district boundaries.</li>
+</ul>
+</%def>
+
 <%def name='css()'>
     .compass .back {fill: #eee; fill-opacity: .8}
     .compass .fore {stroke: #999; stroke-width: 1.5px}
