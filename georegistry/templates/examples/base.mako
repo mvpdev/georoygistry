@@ -49,11 +49,13 @@ $(document).ready(function() {
     }
 
     // Define functions
-    function refreshInterface() {
-        loadTags();
-        renderMaps();
+    function includeTag(tag) {
+        return true;
     }
-    function loadTags() {
+    function activateTag(tag) {
+        return false;
+    }
+    function refreshInterface() {
         $.get('${h.url("tag_index_", responseFormat="json")}', {
             key: $('#key').val()
         }, function(data) {
@@ -61,9 +63,12 @@ $(document).ready(function() {
             $(data.split('\n')).each(function() {
                 var tag = $.trim(this);
                 if (!tag) return;
-                targetDiv.append('<input type=checkbox class=tag value="' + tag + '">' + tag + '<br>');
+                if (includeTag(tag)) {
+                    targetDiv.append('<input type=checkbox class=tag ' + (activateTag(tag) ? 'checked=checked' : '') + ' value="' + tag + '">' + tag + '<br>');
+                }
             });
             $('.tag').change(renderMaps);
+            renderMaps();
         });
     }
     function getSelectedTags() {

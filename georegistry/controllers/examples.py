@@ -15,3 +15,9 @@ class ExamplesController(BaseController):
 
     def polymaps(self):
         return render('/examples/polymaps.mako')
+
+    def polymaps_school_access(self):
+        return render('/examples/polymaps-school-access.mako')
+
+    def polymaps_household_density(self):
+        return render('/examples/polymaps-household-density.mako')
