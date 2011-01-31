@@ -8,6 +8,9 @@ The examples demonstrate usage of the GeoRegistry API as well as hover and click
 
 - `Click here to see the Polymaps example <http://georegistry.org/examples/polymaps>`_ (will not work in Internet Explorer).  Thanks to Mike Bostock for hints on `SVG event handling <https://github.com/simplegeo/polymaps/blob/master/examples/tipsy/tipsy.html>`_.
 
+  - `Click here to see a heatmap image overlay of household density <http://georegistry.org/examples/polymaps-household-density>`_ (will not work in Internet Explorer).
+  - `Click here to see a heatmap image overlay of school access <http://georegistry.org/examples/polymaps-school-access>`_ (will not work in Internet Explorer).
+
 - `Click here to see the OpenLayers example <http://georegistry.org/examples/openlayers>`_.  Thanks to Andy Doro for figuring out `how to style features <http://docs.openlayers.org/library/feature_styling.html>`_.
 
 Reference
