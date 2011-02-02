@@ -53,15 +53,15 @@ Maximum distance to facility in meters <input size=5 value=2000 id=accessDistanc
                 // Load
                 var featureID = this.data.id;
                 // Store propertyByName
-                propertyByNameByID[featureID] = this.data.properties;
+                propertyByName = propertyByNameByID[featureID] = this.data.properties;
                 // Store element
+                var element = this.element;
                 if (!elementsByID[featureID]) elementsByID[featureID] = []
-                elementsByID[featureID].push(this.element);
+                elementsByID[featureID].push(element);
                 // Store geometry
                 if (!geometriesByID[featureID]) geometriesByID[featureID] = []
                 geometriesByID[featureID].push(this.data.geometry);
                 // Set hover listener
-                var element = this.element;
                 element.addEventListener('mouseover', getHoverFeature(featureID), false);
                 element.addEventListener('mouseout', getUnhoverFeature(featureID), false);
                 // Set click listener
@@ -69,7 +69,10 @@ Maximum distance to facility in meters <input size=5 value=2000 id=accessDistanc
                 // Set id
                 element.setAttribute('id', 'e' + featureID);
                 // Set color class
-                restoreFeatureColor(featureID);
+                if (element.nodeName == 'circle' && propertyByName['Type'] == 'Education') {
+                    element.setAttribute('class', 'feature_school');
+                    element.setAttribute('r', '10');
+                }
             });
             // Initialize
             var items = [];
@@ -174,14 +177,8 @@ Maximum distance to facility in meters <input size=5 value=2000 id=accessDistanc
     }
     function restoreFeatureColor(featureID) {
         $(elementsByID[featureID]).each(function() {
-            if (this.nodeName == 'circle') {
-                // Not efficient at all, of course
-                if (propertyByNameByID[featureID] && propertyByNameByID[featureID]['Type'] == 'Education') {
-                    this.setAttribute('class', 'feature_school');
-                    this.setAttribute('r', '10');
-                } else {
-                    this.setAttribute('class', getColorClass(featureID));
-                }
+            if (this.nodeName == 'circle' && this.getAttribute('r') == '10') {
+                this.setAttribute('class', 'feature_school');
             } else {
                 this.setAttribute('class', getColorClass(featureID));
             }
