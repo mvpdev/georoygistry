@@ -197,9 +197,7 @@ Maximum distance to facility in meters <input size=5 value=2000 id=accessDistanc
         .container(document.getElementById('map').appendChild(po.svg('svg')))
         .center({lon: 30.66002, lat: -0.88977})
         .zoom(13)
-        .add(po.image().url(po.url('http://{S}tile.cloudmade.com/8f066e8fa23c4e0abb89650a38555a58/20760/256/{Z}/{X}/{Y}.png').hosts(['a.', 'b.', 'c.', ''])))
-        .add(po.interact())
-        .add(po.compass().pan('none'));
+        .add(po.image().url(po.url('http://{S}tile.cloudmade.com/8f066e8fa23c4e0abb89650a38555a58/20760/256/{Z}/{X}/{Y}.png').hosts(['a.', 'b.', 'c.', ''])));
     map.container().setAttribute('class', 'OrRd');
     var selectedID;
     $('#detail').hover(
@@ -288,4 +286,7 @@ Maximum distance to facility in meters <input size=5 value=2000 id=accessDistanc
         });
     }
     $('#accessFilter').click(colorPopulationCenters);
+
+    // Put this here so it is on top of the images
+    map.add(po.interact()).add(po.compass().pan('none'));
 </%def>
