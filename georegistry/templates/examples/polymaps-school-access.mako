@@ -8,6 +8,8 @@ ${h.stylesheet_link('/files/colorbrewer.css')}
 </%def>
 
 <%def name='navigation()'>
+<br>
+Maximum distance to facility in meters <input size=5 value=2000 id=accessDistance> <input type=button value=Filter id=accessFilter>
 <ul>
     <li>Here is a heatmap of households that are farther than two kilometers from a school in Ruhiira, Uganda.</li>
     <li><a class=linkOFF href='/examples/polymaps-household-density'>Click here to see a heatmap of household density.</a></li>
@@ -25,6 +27,9 @@ ${h.stylesheet_link('/files/colorbrewer.css')}
     .compass .active .chevron, .compass .chevron.active {stroke: #fff}
     .compass.active .active .direction {fill: #999}
     #features {fill-opacity: 0.5}
+    .feature_school {fill: yellow}
+    .feature_house0 {fill: red}
+    .feature_house1 {fill: green}
 </%def>
 
 <%def name='js()'>
@@ -61,7 +66,12 @@ ${h.stylesheet_link('/files/colorbrewer.css')}
                 // Set click listener
                 this.element.addEventListener('click', getSelectFeature(featureID), false);
                 // Set color class
-                this.element.setAttribute('class', getColorClass(featureID));
+                if (this.element.nodeName == 'circle' && this.data.properties['Type'] == 'Education') {
+                    this.element.setAttribute('class', 'feature_school');
+                    this.element.setAttribute('r', '10')
+                } else {
+                    this.element.setAttribute('class', getColorClass(featureID));
+                }
                 // Set id
                 this.element.setAttribute('id', 'e' + featureID);
             });
@@ -241,4 +251,30 @@ ${h.stylesheet_link('/files/colorbrewer.css')}
         image.setAttribute('height', br.y - tl.y);
         image.setAttributeNS('http://www.w3.org/1999/xlink', 'href', '/examples/uganda-ruhiira-school-access.png');
     }).tile(false));
+    var populationCenterByFeatureID = {};
+    map.add(po.geoJson().url('/examples/polymaps-school-filter').on('load', function(e) {
+        $(e.features).each(function() {
+            // Load
+            var featureID = this.data.id;
+            populationCenterByFeatureID[featureID] = {
+                element: this.element,
+                distance: this.data.properties['d']
+            }
+        })
+        colorPopulationCenters();
+    }));
+
+    function colorPopulationCenters() {
+        var accessDistance = $('#accessDistance').val();
+        $.each(populationCenterByFeatureID, function(key, value) {
+            var element = value.element;
+            var distance = value.distance;
+            if (distance > accessDistance) {
+                element.setAttribute('class', 'feature_house0');
+            } else {
+                element.setAttribute('class', 'feature_house1');
+            }
+        });
+    }
+    $('#accessFilter').click(colorPopulationCenters);
 </%def>

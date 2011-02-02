@@ -38,6 +38,7 @@ def make_map(config):
     map.redirect('/examples', '/docs')
     map.connect('/examples/polymaps', controller='examples', action='polymaps')
     map.connect('/examples/polymaps-school-access', controller='examples', action='polymaps_school_access')
+    map.connect('/examples/polymaps-school-filter', controller='examples', action='polymaps_school_filter')
     map.connect('/examples/polymaps-household-density', controller='examples', action='polymaps_household_density')
     map.connect('/examples/openlayers', controller='examples', action='openlayers')
     # Redirect index
