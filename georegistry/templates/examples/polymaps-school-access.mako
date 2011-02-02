@@ -140,7 +140,12 @@ Maximum distance to facility in meters <input size=5 value=2000 id=accessDistanc
             var listHover = $('#d' + featureID);
             listHover.removeClass('bH bS').addClass('bN');
             // Restore map entry
-            setFeatureColor(featureID, getColorClass(featureID));
+                if (this.element.nodeName == 'circle' && this.data.properties['Type'] == 'Education') {
+                    this.element.setAttribute('class', 'feature_school');
+                    this.element.setAttribute('r', '10')
+                } else {
+                    this.element.setAttribute('class', getColorClass(featureID));
+                }
         }
     }
     function getSelectFeature(featureID) {
@@ -150,7 +155,12 @@ Maximum distance to facility in meters <input size=5 value=2000 id=accessDistanc
                 var listSelect = $('#d' + selectedID);
                 if (listSelect) listSelect.removeClass('bH bS').addClass('bN');
                 // Restore map entry
-                setFeatureColor(selectedID, getColorClass(selectedID));
+                if (this.element.nodeName == 'circle' && this.data.properties['Type'] == 'Education') {
+                    this.element.setAttribute('class', 'feature_school');
+                    this.element.setAttribute('r', '10')
+                } else {
+                    this.element.setAttribute('class', getColorClass(featureID));
+                }
             }
             // Load
             selectedID = featureID;
