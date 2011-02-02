@@ -61,19 +61,15 @@ Maximum distance to facility in meters <input size=5 value=2000 id=accessDistanc
                 if (!geometriesByID[featureID]) geometriesByID[featureID] = []
                 geometriesByID[featureID].push(this.data.geometry);
                 // Set hover listener
-                this.element.addEventListener('mouseover', getHoverFeature(featureID), false);
-                this.element.addEventListener('mouseout', getUnhoverFeature(featureID), false);
+                var element = this.element;
+                element.addEventListener('mouseover', getHoverFeature(featureID), false);
+                element.addEventListener('mouseout', getUnhoverFeature(featureID), false);
                 // Set click listener
-                this.element.addEventListener('click', getSelectFeature(featureID), false);
-                // Set color class
-                if (this.element.nodeName == 'circle' && this.data.properties['Type'] == 'Education') {
-                    this.element.setAttribute('class', 'feature_school');
-                    this.element.setAttribute('r', '10')
-                } else {
-                    this.element.setAttribute('class', getColorClass(featureID));
-                }
+                element.addEventListener('click', getSelectFeature(featureID), false);
                 // Set id
-                this.element.setAttribute('id', 'e' + featureID);
+                element.setAttribute('id', 'e' + featureID);
+                // Set color class
+                restoreFeatureColor(featureID);
             });
             // Initialize
             var items = [];
@@ -140,12 +136,7 @@ Maximum distance to facility in meters <input size=5 value=2000 id=accessDistanc
             var listHover = $('#d' + featureID);
             listHover.removeClass('bH bS').addClass('bN');
             // Restore map entry
-                if (this.element.nodeName == 'circle' && this.data.properties['Type'] == 'Education') {
-                    this.element.setAttribute('class', 'feature_school');
-                    this.element.setAttribute('r', '10')
-                } else {
-                    this.element.setAttribute('class', getColorClass(featureID));
-                }
+            restoreFeatureColor(featureID);
         }
     }
     function getSelectFeature(featureID) {
@@ -155,12 +146,7 @@ Maximum distance to facility in meters <input size=5 value=2000 id=accessDistanc
                 var listSelect = $('#d' + selectedID);
                 if (listSelect) listSelect.removeClass('bH bS').addClass('bN');
                 // Restore map entry
-                if (this.element.nodeName == 'circle' && this.data.properties['Type'] == 'Education') {
-                    this.element.setAttribute('class', 'feature_school');
-                    this.element.setAttribute('r', '10')
-                } else {
-                    this.element.setAttribute('class', getColorClass(featureID));
-                }
+                restoreFeatureColor(featureID);
             }
             // Load
             selectedID = featureID;
@@ -184,6 +170,21 @@ Maximum distance to facility in meters <input size=5 value=2000 id=accessDistanc
     function setFeatureColor(featureID, colorClass) {
         $(elementsByID[featureID]).each(function() {
             this.setAttribute('class', colorClass);
+        });
+    }
+    function restoreFeatureColor(featureID) {
+        $(elementsByID[featureID]).each(function() {
+            if (this.nodeName == 'circle') {
+                // Not efficient at all, of course
+                if (propertyByNameByID[featureID] && propertyByNameByID[featureID]['Type'] == 'Education') {
+                    this.setAttribute('class', 'feature_school');
+                    this.setAttribute('r', '10');
+                } else {
+                    this.setAttribute('class', getColorClass(featureID));
+                }
+            } else {
+                this.setAttribute('class', getColorClass(featureID));
+            }
         });
     }
 
